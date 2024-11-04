@@ -7,27 +7,40 @@ through a Kubeflow pipeline on Minikube.
 
 ## Project Structure
 
-kubeflow_pipeline_project/ ├── components/ │ ├── preprocess/ │ │ ├── preprocess.py # Preprocessing script │ │ ├──
-Dockerfile # Dockerfile for preprocessing component
-│ │ └── preprocess_component.yaml # YAML definition for Kubeflow component │ ├── train/ │ │ ├── train.py # Training
-script │ │ ├── Dockerfile # Dockerfile for training component
-│ │ └── train_component.yaml # YAML definition for Kubeflow component │ ├── evaluate/ │ │ ├── evaluate.py # Evaluation
-script │ │ ├── Dockerfile # Dockerfile for evaluation component
-│ │ └── eval_component.yaml # YAML definition for Kubeflow component │ └── predict/ │ ├── predict.py # Prediction and
-text generation script │ ├── Dockerfile # Dockerfile for prediction component
-│ └── predict_component.yaml # YAML definition for Kubeflow component
-├── pipeline.py # Kubeflow pipeline orchestration file ├── requirements.txt # Python dependencies └── README.md #
-Documentation file
+``` 
+kubeflow_pipeline_project/
+├── components/
+│   ├── preprocess/
+│   │   ├── preprocess.py                # Preprocessing script
+│   │   ├── Dockerfile                   # Dockerfile for preprocessing component
+│   │   └── preprocess_component.yaml    # YAML definition for Kubeflow component
+│   ├── train/
+│   │   ├── train.py                     # Training script
+│   │   ├── Dockerfile                   # Dockerfile for training component
+│   │   └── train_component.yaml         # YAML definition for Kubeflow component
+│   ├── evaluate/
+│   │   ├── evaluate.py                  # Evaluation script
+│   │   ├── Dockerfile                   # Dockerfile for evaluation component
+│   │   └── eval_component.yaml          # YAML definition for Kubeflow component
+│   └── predict/
+│       ├── predict.py                   # Prediction and text generation script
+│       ├── Dockerfile                   # Dockerfile for prediction component
+│       └── predict_component.yaml       # YAML definition for Kubeflow component
+├── pipeline.py                          # Kubeflow pipeline orchestration file
+├── requirements.txt                     # Python dependencies
+└── README.md                            # Documentation file
+```
+
 
 Each component (preprocess, train, evaluate, and predict) runs as an independent operation in the pipeline, managed by
 Kubernetes on Minikube.
 
 ## Requirements
 
-    Docker: Install Docker to build and deploy images.
-    Minikube: Install Minikube and Kubeflow to run the pipeline locally.
-    Python: Make sure you have Python 3.8 or higher.
-    Kubeflow Pipelines SDK: Install the Kubeflow Pipelines SDK to compile the pipeline.
+* Docker: Install Docker to build and deploy images. 
+* Minikube: Install Minikube and Kubeflow to run the pipeline locally. 
+* Python: Make sure you have Python 3.8 or higher. 
+* Kubeflow Pipelines SDK: Install the Kubeflow Pipelines SDK to compile the pipeline. 
 
 ## Step 1: Build Docker Images
 
@@ -35,7 +48,8 @@ Navigate to each component subdirectory (e.g., components/preprocess, components
 and push them to an image registry (Docker Hub, Google Container Registry,
 or a local registry configured for Minikube).
 
-Commands bash
+Commandes bash:
+
 docker build -t kubeflow_pipeline_project/components/preprocess_component:latest -f components/preprocess/Dockerfile .
 docker push kubeflow_pipeline_project/components/preprocess_component:latest
 
@@ -52,7 +66,8 @@ docker push kubeflow_pipeline_project/components/predict_component:latest
 
 Compile the pipeline into a YAML file that Kubeflow can use by running pipeline.py. This will generate an
 author_classification_pipeline.yaml file.
-Command bash
+Commande bash:
+
 python pipeline.py
 
 ## Step 3: Deploy the Pipeline on Kubeflow
