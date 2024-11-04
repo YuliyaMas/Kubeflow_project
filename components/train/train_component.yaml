@@ -1,0 +1,15 @@
+name: Train Model
+description: "Train a model to classify authors."
+inputs:
+  - {name: data_path, type: String, description: "Path to preprocessed data"}
+  - {name: metadata_path, type: String, description: "Path to metadata"}
+  - {name: output_model_path, type: String, description: "Path to save trained model"}
+implementation:
+  container:
+    image: gcr.io/my-project/train-component:latest
+    command: [
+      "python", "/app/train.py",
+      "--data-path", {inputPath: data_path},
+      "--metadata-path", {inputPath: metadata_path},
+      "--output-model-path", {outputPath: output_model_path}
+    ]

@@ -1,0 +1,17 @@
+name: Predict Author and Generate Text
+description: "Predict the author of input text and predict text continuation."
+inputs:
+  - {name: model_path, type: String, description: "Path to trained model"}
+  - {name: metadata_path, type: String, description: "Path to metadata for character encoding"}
+  - {name: input_text, type: String, description: "Input text to predict author"}
+outputs:
+  - {name: generated_text, type: String, description: "Generated text based on input"}
+implementation:
+  container:
+    image: gcr.io/my-project/predict-component:latest
+    command: [
+      "python", "/app/predict.py",
+      "--model-path", {inputPath: model_path},
+      "--metadata-path", {inputPath: metadata_path},
+      "--input-text", {inputValue: input_text}
+    ]
